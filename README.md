@@ -54,7 +54,7 @@ Nest JS no Back-end com TypeORM e Postgres são as que utilizamos e desejamos co
     -  notistack, react-toastify.
 
 
-Link do Figma: https://www.figma.com/file/aEgfeSSNgaycj2533zay6j/my-companies-teste-hublocal?node-id=18%3A1128&t=MMokX7s0Cm6jYLUx-1
+Link do Figma: https://www.figma.com/file/aEgfeSSNgaycj2533zay6j/my-companies-teste-hublocal?node-id=0%3A1&t=tBHtjibCLR5guvHh-0
 
 <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FaEgfeSSNgaycj2533zay6j%2Fmy-companies-teste-hublocal%3Fnode-id%3D0%253A1%26t%3DIca8qwTvTG6b2Goi-1" allowfullscreen></iframe>
 
