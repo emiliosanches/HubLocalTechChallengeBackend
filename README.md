@@ -5,7 +5,6 @@ Este é um desafio para que possamos ver as suas habilidades como Fullstack Deve
 ### Antes de começar
 
 - Prepare o projeto para ser disponibilizado no Github, copiando o conteúdo deste repositório para o seu (ou utilize o fork do projeto e aponte para o Github). Confirme que a visibilidade do projeto é pública (não esqueça de colocar no readme a referência a este challenge);
-- O projeto deve utilizar a Linguagem específica na sua Vaga (caso esteja se candidatando). Por exempo: Python, R, Scala e entre outras;
 - Considere como deadline 5 dias a partir do início do desafio. Caso tenha sido convidado a realizar o teste e não seja possível concluir dentro deste período, avise a pessoa que o convidou para receber instruções sobre o que fazer.
 - Documentar todo o processo de investigação para o desenvolvimento da atividade (README.md no seu repositório); os resultados destas tarefas são tão importantes do que o seu processo de pensamento e decisões à medida que as completa, por isso tente documentar e apresentar os seus hipóteses e decisões na medida do possível.
 
@@ -18,12 +17,10 @@ Este é um desafio para que possamos ver as suas habilidades como Fullstack Deve
 4. Redux Persist - https://github.com/rt2zz/redux-persist
 5. Axios - https://axios-http.com/ptbr/docs/intro
 
-Nada impede que você utilize outras como Chakra UI e
-Context API em vez de um Material UI e Redux, e assim por diante.
+Nada impede que você utilize outras como Chakra UI e Context API em vez de um Material UI e Redux, e assim por diante.
 
 ## Tecnologias (Back-End):
-Nest JS no Back-end com TypeORM e Postgres são as que utilizamos e desejamos como diferencial. No lugar de
-TypeORM uma boa pedida seria Prisma.
+Nest JS no Back-end com TypeORM e Postgres são as que utilizamos e desejamos como diferencial. No lugar de TypeORM uma boa pedida seria Prisma.
 
 
 ## Diferencial:
@@ -82,8 +79,8 @@ Locais
 - Relacionamentos: Many To One com Empresas.
 
 Auth
-1. Validar todas as rotas dos controllers com JWT;
-2. Ao usuário logar, o token deve ser retornado para ser guardado para as próximas requests no front-end.
+- Validar todas as rotas dos controllers com JWT;
+- Ao usuário logar, o token deve ser retornado para ser guardado para as próximas requests no front-end.
 
 ## Readme do Repositório
 
