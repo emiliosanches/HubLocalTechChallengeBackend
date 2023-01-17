@@ -1,92 +1,117 @@
-# HubLocal
+# Teste Novos Devs HubLocal
+
+Este é um desafio para que possamos ver as suas habilidades como Fullstack Developer.
+
+### Antes de começar
+
+- Prepare o projeto para ser disponibilizado no Github, copiando o conteúdo deste repositório para o seu (ou utilize o fork do projeto e aponte para o Github). Confirme que a visibilidade do projeto é pública (não esqueça de colocar no readme a referência a este challenge);
+- O projeto deve utilizar a Linguagem específica na sua Vaga (caso esteja se candidatando). Por exempo: Python, R, Scala e entre outras;
+- Considere como deadline 5 dias a partir do início do desafio. Caso tenha sido convidado a realizar o teste e não seja possível concluir dentro deste período, avise a pessoa que o convidou para receber instruções sobre o que fazer.
+- Documentar todo o processo de investigação para o desenvolvimento da atividade (README.md no seu repositório); os resultados destas tarefas são tão importantes do que o seu processo de pensamento e decisões à medida que as completa, por isso tente documentar e apresentar os seus hipóteses e decisões na medida do possível.
+
+## Tecnologias (Front-End):
+
+> Obs: as techs listadas abaixo fazem parte de nossos projetos diariamente.
+1. Material UI - https://mui.com/material-ui/
+2. Styled Component - https://styled-components.com/
+3. Redux - https://redux.js.org/
+4. Redux Persist - https://github.com/rt2zz/redux-persist
+5. Axios - https://axios-http.com/ptbr/docs/intro
+
+Nada impede que você utilize outras como Chakra UI e
+Context API em vez de um Material UI e Redux, e assim por diante.
+
+## Tecnologias (Back-End):
+Nest JS no Back-end com TypeORM e Postgres são as que utilizamos e desejamos como diferencial. No lugar de
+TypeORM uma boa pedida seria Prisma.
 
 
+## Diferencial:
+* Migrations
+* Deploy em algum servidor
+* React Test Library
+* BDD
+* TDD
 
-## Getting started
+## Organização:
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+* Separar o repositório do back do front
+* Aplicação de padrões Clean Code
+* Validação de chamadas assíncronas para evitar travamentos
+* Deixar instruções detalhadas no README de cada projeto
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+## Telas/Components:
 
-## Add your files
+* Sign In (tela inicial)
+* Sign Up
+* CRUD de Empresas
+* CRUD de Locais
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+### Validações
+1. campos dos formulários, principalmente que envolvem números;
+    - adicionar máscaras nos campos que precisem, no caso sendo um deles o CNPJ.
+2. Controle de estados e persistência
+    - Usar Redux, Context API ou qualquer outro framework;
+    - Usar Redux Persist ou outro meio para persistir dados de estado.
+3. Usar Lib de Feedback
+    -  notistack, react-toastify.
 
-```
-cd existing_repo
-git remote add origin https://lab.coodesh.com/challenges/fullstack/hublocal.git
-git branch -M main
-git push -uf origin main
-```
 
-## Integrate with your tools
+Link do Figma: https://www.figma.com/file/aEgfeSSNgaycj2533zay6j/my-companies-teste-hublocal?node-id=18%3A1128&t=MMokX7s0Cm6jYLUx-1
 
-- [ ] [Set up project integrations](https://lab.coodesh.com/challenges/fullstack/hublocal/-/settings/integrations)
+<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FaEgfeSSNgaycj2533zay6j%2Fmy-companies-teste-hublocal%3Fnode-id%3D0%253A1%26t%3DIca8qwTvTG6b2Goi-1" allowfullscreen></iframe>
 
-## Collaborate with your team
+### Funcionalidades:
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+1. Logar/Criar usuários
+2. Criar/Listar/Deletar/Editar empresas (usuário logado)
+3. Criar/Listar/Deletar/Editar locais pertencentes a uma empresa (usuário logado)
 
-## Test and Deploy
+### Entidades:
 
-Use the built-in continuous integration in GitLab.
+Usuários
+- Colunas: Nome, Email e Senha.
+- Relacionamentos: One To Many com Empresas
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+Empresas
+- Colunas: Nome, Website e CNPJ.
+- Relacionamentos: Many To One com Usuários e One To Many com Locais.
 
-***
+Locais
+- Colunas: Nome, CEP, Rua, Número, Bairro, Cidade e Estado.
+- Relacionamentos: Many To One com Empresas.
 
-# Editing this README
+Auth
+1. Validar todas as rotas dos controllers com JWT;
+2. Ao usuário logar, o token deve ser retornado para ser guardado para as próximas requests no front-end.
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+## Readme do Repositório
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+- Deve conter o título do projeto
+- Uma descrição sobre o projeto em frase
+- Deve conter uma lista com linguagem, framework e/ou tecnologias usadas
+- Como instalar e usar o projeto (instruções)
+- Não esqueça o [.gitignore](https://www.toptal.com/developers/gitignore)
+- Se está usando github pessoal, referencie que é um challenge by coodesh:  
 
-## Name
-Choose a self-explaining name for your project.
+>  This is a challenge by [Coodesh](https://coodesh.com/)
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+## Finalização e Instruções para a Apresentação
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+Avisar sobre a finalização e enviar para correção.
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+1. Confira se você respondeu o Scorecard da Vaga que chegou no seu email;
+2. Confira se você respondeu o Mapeamento Comportamental que chegou no seu email;
+3. Acesse: [https://coodesh.com/challenges/review](https://coodesh.com/challenges/review);
+4. Adicione o repositório com a sua solução;
+5. Grave um vídeo, utilizando o botão na tela de solicitar revisão da Coodesh, com no máximo 5 minutos, com a apresentação do seu projeto. Foque em pontos obrigatórios e diferenciais quando for apresentar.
+6. Adicione o link da apresentação do seu projeto no README.md.
+7. Verifique se o Readme está bom e faça o commit final em seu repositório;
+8. Confira a vaga desejada;
+9. Envie e aguarde as instruções para seguir no processo. Sucesso e boa sorte. =)
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+## Suporte
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+Use a [nossa comunidade](https://discord.gg/rdXbEvjsWu) para tirar dúvidas sobre o processo ou envie uma mensagem diretamente a um especialista no chat da plataforma. 
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
