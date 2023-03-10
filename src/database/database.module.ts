@@ -1,14 +1,15 @@
 import { TypeOrmModule } from '@nestjs/typeorm/dist';
+import { EnvConfig } from 'src/env';
 
 export const DatabaseModule = TypeOrmModule.forRootAsync({
-  useFactory: async () => ({
-    //todo replace process.env with config service
+  useFactory: async (config: EnvConfig) => ({
     type: 'postgres',
-    host: process.env.DB_HOST,
-    port: Number(process.env.DB_PORT || 5432),
-    username: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
+    host: config.DB_HOST,
+    port: config.DB_PORT,
+    username: config.DB_USER,
+    password: config.DB_PASSWORD,
+    database: config.DB_NAME,
     entities: [__dirname + '/../**/*.entity{.ts,.js}'],
   }),
+  inject: [EnvConfig],
 });
