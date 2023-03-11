@@ -3,7 +3,7 @@ import { CreateOrganizationDto } from './dto/create-company.dto';
 import { UpdateOrganizationDto } from './dto/update-company.dto';
 
 @Injectable()
-export class OrganizationsService {
+export class CompaniesService {
   create(createOrganizationDto: CreateOrganizationDto) {
     return 'This action adds a new organization';
   }

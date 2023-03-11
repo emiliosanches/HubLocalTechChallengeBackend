@@ -2,9 +2,10 @@ import { Module } from '@nestjs/common';
 import { TypedConfigModule, dotenvLoader } from 'nest-typed-config';
 import { DatabaseModule } from './database/database.module';
 import { EnvConfig } from './env';
-import { OrganizationsModule } from './companies/companies.module';
+import { CompaniesModule } from './companies/companies.module';
 import { UsersModule } from './users/users.module';
 import { PlacesModule } from './places/places.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -17,9 +18,10 @@ import { PlacesModule } from './places/places.module';
       },
     }),
     DatabaseModule,
-    OrganizationsModule,
+    CompaniesModule,
     UsersModule,
     PlacesModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
