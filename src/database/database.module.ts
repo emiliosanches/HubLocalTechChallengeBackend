@@ -1,4 +1,4 @@
-import { TypeOrmModule } from '@nestjs/typeorm/dist';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { EnvConfig } from 'src/env';
 
 export const DatabaseModule = TypeOrmModule.forRootAsync({
@@ -10,6 +10,8 @@ export const DatabaseModule = TypeOrmModule.forRootAsync({
     password: config.DB_PASSWORD,
     database: config.DB_NAME,
     entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+    migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
+    migrationsRun: true,
   }),
   inject: [EnvConfig],
 });
