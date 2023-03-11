@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypedConfigModule, dotenvLoader } from 'nest-typed-config';
 import { DatabaseModule } from './database/database.module';
 import { EnvConfig } from './env';
-import { OrganizationsModule } from './organizations/organizations.module';
+import { OrganizationsModule } from './companies/companies.module';
 import { UsersModule } from './users/users.module';
 import { PlacesModule } from './places/places.module';
 
