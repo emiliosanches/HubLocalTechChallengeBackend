@@ -1,5 +1,6 @@
-import { ConflictException } from '@nestjs/common';
+import { ConflictException, UnauthorizedException } from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
+import { NotFoundException } from '@nestjs/common/exceptions';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateCompanyDto } from './dto/create-company.dto';
@@ -34,19 +35,66 @@ export class CompaniesService {
     });
   }
 
-  findAll() {
-    return `This action returns all companies`;
+  async findAll(loggedUserId: number, page = 1, perPage = 10) {
+    const [data, total] = await this.companiesRepository.findAndCount({
+      relations: ['places'],
+      take: perPage,
+      skip: perPage * (page - 1),
+      where: {
+        userId: loggedUserId,
+      },
+    });
+
+    return {
+      page: page,
+      perPage: perPage,
+      total,
+      data: data.map((company) => ({
+        id: company.id,
+        name: company.name,
+        placesAmount: company.places.length,
+      })),
+    };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} company`;
+  async findOne(id: number, loggedUserId: number) {
+    const company = await this.companiesRepository.findOne({
+      where: {
+        id,
+      },
+    });
+
+    if (!company) throw new NotFoundException();
+
+    if (company.userId !== loggedUserId) {
+      throw new UnauthorizedException({
+        message: "You're not the owner of this company",
+      });
+    }
+
+    return company;
   }
 
-  update(id: number, updateCompanyDto: UpdateCompanyDto) {
-    return `This action updates a #${id} company`;
+  async update(
+    id: number,
+    updateCompanyDto: UpdateCompanyDto,
+    loggedUserId: number,
+  ) {
+    updateCompanyDto.cnpj =
+      updateCompanyDto.cnpj && updateCompanyDto.cnpj.replace(/\D/g, '');
+
+    const company = await this.findOne(id, loggedUserId);
+
+    this.companiesRepository.merge(company, updateCompanyDto);
+
+    await this.companiesRepository.save(company);
+
+    return company;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} company`;
+  async remove(id: number, loggedUserId) {
+    const company = await this.findOne(id, loggedUserId);
+
+    await this.companiesRepository.remove(company);
   }
 }
