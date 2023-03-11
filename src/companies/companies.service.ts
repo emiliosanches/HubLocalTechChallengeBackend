@@ -57,7 +57,7 @@ export class CompaniesService {
     };
   }
 
-  async findOne(id: number, loggedUserId: number) {
+  async findOne(id: number) {
     const company = await this.companiesRepository.findOne({
       where: {
         id,
@@ -66,24 +66,14 @@ export class CompaniesService {
 
     if (!company) throw new NotFoundException();
 
-    if (company.userId !== loggedUserId) {
-      throw new UnauthorizedException({
-        message: "You're not the owner of this company",
-      });
-    }
-
     return company;
   }
 
-  async update(
-    id: number,
-    updateCompanyDto: UpdateCompanyDto,
-    loggedUserId: number,
-  ) {
+  async update(id: number, updateCompanyDto: UpdateCompanyDto) {
     updateCompanyDto.cnpj =
       updateCompanyDto.cnpj && updateCompanyDto.cnpj.replace(/\D/g, '');
 
-    const company = await this.findOne(id, loggedUserId);
+    const company = await this.findOne(id);
 
     this.companiesRepository.merge(company, updateCompanyDto);
 
@@ -92,8 +82,8 @@ export class CompaniesService {
     return company;
   }
 
-  async remove(id: number, loggedUserId) {
-    const company = await this.findOne(id, loggedUserId);
+  async remove(id: number) {
+    const company = await this.findOne(id);
 
     await this.companiesRepository.remove(company);
   }

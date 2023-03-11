@@ -13,6 +13,7 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
+import { CompanyAccessGuard } from 'src/authorization/company-access.guard';
 import { CompaniesService } from './companies.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { ListCompaniesDto } from './dto/list-companies.dto';
@@ -39,29 +40,24 @@ export class CompaniesController {
     );
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Get(':id')
-  findOne(@Param('id') id: string, @Req() request: Request) {
-    return this.companiesService.findOne(Number(id), request.user.id);
+  @UseGuards(JwtAuthGuard, CompanyAccessGuard)
+  @Get(':companyId')
+  findOne(@Param('companyId') id: string) {
+    return this.companiesService.findOne(Number(id));
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Patch(':id')
+  @UseGuards(JwtAuthGuard, CompanyAccessGuard)
+  @Patch(':companyId')
   update(
-    @Param('id') id: string,
+    @Param('companyId') id: string,
     @Body() updateCompanyDto: UpdateCompanyDto,
-    @Req() request: Request,
   ) {
-    return this.companiesService.update(
-      Number(id),
-      updateCompanyDto,
-      request.user.id,
-    );
+    return this.companiesService.update(Number(id), updateCompanyDto);
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Delete(':id')
-  remove(@Param('id') id: string, @Req() request: Request) {
-    return this.companiesService.remove(Number(id), request.user.id);
+  @UseGuards(JwtAuthGuard, CompanyAccessGuard)
+  @Delete(':companyId')
+  remove(@Param('companyId') id: string) {
+    return this.companiesService.remove(Number(id));
   }
 }
