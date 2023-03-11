@@ -10,6 +10,11 @@ export class User {
   name: string;
 
   @Column()
+  email: string;
+
+  @Column({
+    select: false,
+  })
   password: string;
 
   @OneToMany(() => Company, (company) => company.user)
