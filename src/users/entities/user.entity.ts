@@ -1,4 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import { Exclude } from 'class-transformer';
 import { Company } from 'src/companies/entities/company.entity';
 
 @Entity('users')
@@ -12,8 +13,9 @@ export class User {
   @Column()
   email: string;
 
-  @Column({
-    select: false,
+  @Column()
+  @Exclude({
+    toPlainOnly: true,
   })
   password: string;
 

@@ -28,13 +28,13 @@ export class UsersService {
 
     const salt = await genSalt(15);
 
-    const user = await this.usersRepository.save({
+    const user = this.usersRepository.create({
       name: createUserDto.name,
       email: createUserDto.email,
       password: await hash(createUserDto.password, salt),
     });
 
-    delete user.password;
+    await this.usersRepository.save(user);
 
     return user;
   }

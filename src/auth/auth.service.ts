@@ -15,14 +15,12 @@ export class AuthService {
 
   async validateUser(email: string, pass: string) {
     const user = await this.usersRepository.findOne({
-      select: ['id', 'name', 'email', 'password'],
       where: {
         email,
       },
     });
 
     if (user && (await compare(pass, user.password))) {
-      delete user.password;
       return user;
     }
 
