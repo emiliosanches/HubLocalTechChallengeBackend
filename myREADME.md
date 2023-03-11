@@ -54,4 +54,15 @@ Para ter uma maior segurança na senha, o bcrypt foi escolhido para gerar o hash
 - Um número
 - Um símbolo
 
+### 4. Login
+
+A funcionalidade de login é feita por meio de JWT. O servidor recebe a requisição de login, procura pelo usuário que possua o e-mail e senha informados e, caso encontre, gera um JWT com as informações desse usuário.
+
+### 5. CRUD de empresas
+
+O módulo `companies` (empresas) possui 5 métodos que desempenham as funcionalidades de um CRUD: criação, leitura (listagem e busca por ID), atualização e remoção.
+Os métodos foram implementados de forma simples, similar ao que existe na documentação do NestJS (e TypeORM).
+
+### 6. CRUD de locais
+
 > This is a challenge by [Coodesh](https://coodesh.com/)
