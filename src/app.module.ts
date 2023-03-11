@@ -3,6 +3,8 @@ import { TypedConfigModule, dotenvLoader } from 'nest-typed-config';
 import { DatabaseModule } from './database/database.module';
 import { EnvConfig } from './env';
 import { OrganizationsModule } from './organizations/organizations.module';
+import { UsersModule } from './users/users.module';
+import { PlacesModule } from './places/places.module';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { OrganizationsModule } from './organizations/organizations.module';
     }),
     DatabaseModule,
     OrganizationsModule,
+    UsersModule,
+    PlacesModule,
   ],
   controllers: [],
   providers: [],
