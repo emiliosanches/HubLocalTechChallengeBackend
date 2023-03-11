@@ -1,3 +1,4 @@
+import { ConflictException } from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -13,6 +14,18 @@ export class CompaniesService {
   ) {}
 
   async create(createCompanyDto: CreateCompanyDto, loggedUserId: number) {
+    const companyWithCnpj = await this.companiesRepository.find({
+      where: {
+        cnpj: createCompanyDto.cnpj,
+      },
+    });
+
+    if (companyWithCnpj) {
+      throw new ConflictException({
+        message: 'There is already a company with the informed CNPJ',
+      });
+    }
+
     return await this.companiesRepository.save({
       ...createCompanyDto,
       userId: loggedUserId,
