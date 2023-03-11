@@ -14,7 +14,9 @@ export class CompaniesService {
   ) {}
 
   async create(createCompanyDto: CreateCompanyDto, loggedUserId: number) {
-    const companyWithCnpj = await this.companiesRepository.find({
+    createCompanyDto.cnpj = createCompanyDto.cnpj.replace(/\D/g, '');
+
+    const companyWithCnpj = await this.companiesRepository.findOne({
       where: {
         cnpj: createCompanyDto.cnpj,
       },

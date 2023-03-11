@@ -14,7 +14,7 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const userWithEmail = await this.usersRepository.find({
+    const userWithEmail = await this.usersRepository.findOne({
       where: {
         email: createUserDto.email,
       },
