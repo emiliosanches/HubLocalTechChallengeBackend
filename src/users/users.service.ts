@@ -15,10 +15,14 @@ export class UsersService {
   async create(createUserDto: CreateUserDto) {
     const salt = await genSalt(15);
 
-    return await this.usersRepository.save({
+    const user = await this.usersRepository.save({
       name: createUserDto.name,
       email: createUserDto.email,
       password: await hash(createUserDto.password, salt),
     });
+
+    delete user.password;
+
+    return user;
   }
 }

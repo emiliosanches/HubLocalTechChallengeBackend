@@ -34,6 +34,7 @@
     "@nestjs/typeorm": "^9.0.1",
     "bcrypt": "^5.1.0",
     "class-validator": "^0.14.0",
+    "cpf-cnpj-validator": "^1.0.3",
     "nest-typed-config": "^2.5.1",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",

@@ -1,13 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger/dist/decorators';
-import { IsNumberString, IsString, IsUrl, Length } from 'class-validator';
+import { IsString, IsUrl } from 'class-validator';
+import { IsCnpj } from 'src/validators/IsCnpj.decorator';
 
 export class CreateCompanyDto {
   @ApiProperty()
   @IsString()
   name: string;
 
-  @IsNumberString()
-  @Length(14, 14)
+  @IsCnpj()
   @ApiProperty()
   cnpj: string;
 
