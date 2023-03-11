@@ -1,1 +1,1 @@
-export class CreateOrganizationDto {}
+export class CreateCompanyDto {}
