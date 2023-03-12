@@ -63,6 +63,21 @@ A funcionalidade de login é feita por meio de JWT. O servidor recebe a requisi�
 O módulo `companies` (empresas) possui 5 métodos que desempenham as funcionalidades de um CRUD: criação, leitura (listagem e busca por ID), atualização e remoção.
 Os métodos foram implementados de forma simples, similar ao que existe na documentação do NestJS (e TypeORM).
 
-### 6. CRUD de locais
+### 6. Autorização
+
+Para realizar a autorização dos endpoints (verificar se o usuário logado - autenticado - possui permissão para realizar a ação), foi utilizado o conceito de Guards do NestJS. Com isso, evitamos a duplicação de código e abstraímos uma funcionalidade comum (verificação de permissão) para uma outra classe.
+
+#### 6.1. CompanyAccessGuard
+
+Esse guard acessa o parâmetro de rota companyId e verifica se o usuário logado (informado no JWT) é o proprietário daquela empresa.
+Caso o id informado no companyId não exista no banco, o endpoint é permitido para que o service retorne um 404 (NotFoundException), ao invés de um 401 (UnauthorizedException)
+
+### 7. CRUD de locais
+
+O CRUD de locais possui uma única diferença do CRUD de empresas: o caminho.
+Ele foi definido na rota `/companies/{companyId}/places` pois, dessa forma, o companyId pode ser utilizado para autorização com o mesmo guard do CRUD de empresas (CompanyAccessGuard).
+Isso é possível pois os locais possuem relacionamento ManyToOne com as empresas. Portanto, o usuário possui acesso aos locais de uma empresa que seja sua.
+O guard valida se o companyId na rota é pertencente ao usuário logado, e o service retorna apenas locais relacionados ao companyId informado.
+
 
 > This is a challenge by [Coodesh](https://coodesh.com/)
