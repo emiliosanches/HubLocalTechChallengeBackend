@@ -1,6 +1,6 @@
 # Teste Técnico - Fullstack Javascript Developer - Backend
 
-Esse repositório contem o backend de um teste técnico para a vaga de FullStack Javascript Developer na HubLocal. Trata-se de uma interface em React com autenticação, formulários de cadastro e telas de listagem.
+Esse repositório contem o backend de um teste técnico para a vaga de FullStack Javascript Developer na HubLocal. Trata-se de um CRUD de duas entidades (empresas e locais) relacionadas, desenvolvido em NestJS, com autenticação (login e cadastro).
 
 ## Tecnologias utilizadas
 
@@ -23,8 +23,13 @@ Passo a passo:
 4. Adicione um arquivo .env nesse diretório, com o formato abaixo, substituindo os valores de acordo com o seu ambiente de execução
 
 ```shell
-# server
+DB_HOST=db_hostname
+DB_PORT=5432
+DB_USER=dbuser
+DB_PASSWORD=D4T4B4S3_P455
+DB_NAME=database_name
 
+JWT_SECRET=jwt_secret
 ```
 
 5. Execute `yarn start:dev` ou `npm run start:dev` para iniciar o servidor
@@ -78,6 +83,5 @@ O CRUD de locais possui uma única diferença do CRUD de empresas: o caminho.
 Ele foi definido na rota `/companies/{companyId}/places` pois, dessa forma, o companyId pode ser utilizado para autorização com o mesmo guard do CRUD de empresas (CompanyAccessGuard).
 Isso é possível pois os locais possuem relacionamento ManyToOne com as empresas. Portanto, o usuário possui acesso aos locais de uma empresa que seja sua.
 O guard valida se o companyId na rota é pertencente ao usuário logado, e o service retorna apenas locais relacionados ao companyId informado.
-
 
 > This is a challenge by [Coodesh](https://coodesh.com/)
