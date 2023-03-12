@@ -1,114 +1,83 @@
-# Teste Novos Devs HubLocal
+# Teste Técnico - Fullstack Javascript Developer - Backend
 
-Este é um desafio para que possamos ver as suas habilidades como Fullstack Developer.
+Esse repositório contem o backend de um teste técnico para a vaga de FullStack Javascript Developer na HubLocal. Trata-se de uma interface em React com autenticação, formulários de cadastro e telas de listagem.
 
-### Antes de começar
+## Tecnologias utilizadas
 
-- Prepare o projeto para ser disponibilizado no Github, copiando o conteúdo deste repositório para o seu (ou utilize o fork do projeto e aponte para o Github). Confirme que a visibilidade do projeto é pública (não esqueça de colocar no readme a referência a este challenge);
-- Considere como deadline 5 dias a partir do início do desafio. Caso tenha sido convidado a realizar o teste e não seja possível concluir dentro deste período, avise a pessoa que o convidou para receber instruções sobre o que fazer.
-- Documentar todo o processo de investigação para o desenvolvimento da atividade (README.md no seu repositório); os resultados destas tarefas são tão importantes do que o seu processo de pensamento e decisões à medida que as completa, por isso tente documentar e apresentar os seus hipóteses e decisões na medida do possível.
+- NestJS
+- TypeScript
+- TypeORM
+- PostgreSQL
 
-## Tecnologias (Front-End):
+## Como instalar e executar o projeto
 
-> Obs: as techs listadas abaixo fazem parte de nossos projetos diariamente.
-1. Material UI - https://mui.com/material-ui/
-2. Styled Component - https://styled-components.com/
-3. Redux - https://redux.js.org/
-4. Redux Persist - https://github.com/rt2zz/redux-persist
-5. Axios - https://axios-http.com/ptbr/docs/intro
+Pré requisitos:
 
-Nada impede que você utilize outras como Chakra UI e Context API em vez de um Material UI e Redux, e assim por diante.
+- Possuir um banco de dados (preferencialmente PostgreSQL) configurado.
 
-## Tecnologias (Back-End):
-Nest JS no Back-end com TypeORM e Postgres são as que utilizamos e desejamos como diferencial. No lugar de TypeORM uma boa pedida seria Prisma.
+Passo a passo:
 
+1. Clone o repositório
+2. Entre no diretório do projeto utilizando um terminal (`cd path/to/repo`)
+3. Execute `yarn` ou `npm i` para instalar as dependências
+4. Adicione um arquivo .env nesse diretório, com o formato abaixo, substituindo os valores de acordo com o seu ambiente de execução
 
-## Diferencial:
-* Migrations
-* Deploy em algum servidor
-* React Test Library
-* BDD
-* TDD
+```shell
+# server
 
-## Organização:
+```
 
-* Separar o repositório do back do front
-* Aplicação de padrões Clean Code
-* Validação de chamadas assíncronas para evitar travamentos
-* Deixar instruções detalhadas no README de cada projeto
+5. Execute `yarn start:dev` ou `npm run start:dev` para iniciar o servidor
 
-## Telas/Components:
+## Documentação do processo de desenvolvimento
 
-* Sign In (tela inicial)
-* Sign Up
-* CRUD de Empresas
-* CRUD de Locais
+Abaixo, explicações sobre algumas decisões tomadas durante o desenvolvimento da aplicação
 
-### Validações
-1. campos dos formulários, principalmente que envolvem números;
-    - adicionar máscaras nos campos que precisem, no caso sendo um deles o CNPJ.
-2. Controle de estados e persistência
-    - Usar Redux, Context API ou qualquer outro framework;
-    - Usar Redux Persist ou outro meio para persistir dados de estado.
-3. Usar Lib de Feedback
-    -  notistack, react-toastify.
+### 1. Utilização do pacote nest-typed-config
 
+Esse pacote permite a definição de um schema para as variáveis de ambiente. Sendo assin, caso uma variável esteja faltando, o erro será lançado durante a inicialização da aplicação - permitindo uma correção antes mesmo da execução do código que utiliza a variável.
+Além disso, esse pacote também define uma tipagem para as variáveis. Dessa forma, ao desenvolver, é possível saber quais variáveis existem, evitando erros de digitação ou o uso de alguma variável que ainda não foi definida no arquivo de configuração.
 
-Link do Figma: https://www.figma.com/file/aEgfeSSNgaycj2533zay6j/my-companies-teste-hublocal?node-id=0%3A1&t=tBHtjibCLR5guvHh-0
+### 2. Problemas com typeorm 0.3.12
 
-<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FaEgfeSSNgaycj2533zay6j%2Fmy-companies-teste-hublocal%3Fnode-id%3D0%253A1%26t%3DIca8qwTvTG6b2Goi-1" allowfullscreen></iframe>
+Após ter problemas com as migrations do typeorm (e passar algumas horas tentando resolvê-lo), descobri que havia um problema com a versão 0.3.12, que utiliza a versão 8.1.0 do pacote `glob`.
+Portanto, precisei fixar a versão do typeorm em 0.3.11.
+Informei a causa do problema e como resolvê-lo [em um comentário de uma issue do typeorm](https://github.com/typeorm/typeorm/issues/9840#issuecomment-1464948483).
 
-### Funcionalidades:
+### 3. Segurança de senha
 
-1. Logar/Criar usuários
-2. Criar/Listar/Deletar/Editar empresas (usuário logado)
-3. Criar/Listar/Deletar/Editar locais pertencentes a uma empresa (usuário logado)
+Para ter uma maior segurança na senha, o bcrypt foi escolhido para gerar o hash armazenado no banco de dados, com 15 salt rounds, e foram definidos os seguintes requisitos para a sua composição:
 
-### Entidades:
+- 8 caracteres
+- Uma letra maiúscula
+- Uma letra minúscula
+- Um número
+- Um símbolo
 
-Usuários
-- Colunas: Nome, Email e Senha.
-- Relacionamentos: One To Many com Empresas
+### 4. Login
 
-Empresas
-- Colunas: Nome, Website e CNPJ.
-- Relacionamentos: Many To One com Usuários e One To Many com Locais.
+A funcionalidade de login é feita por meio de JWT. O servidor recebe a requisição de login, procura pelo usuário que possua o e-mail e senha informados e, caso encontre, gera um JWT com as informações desse usuário.
 
-Locais
-- Colunas: Nome, CEP, Rua, Número, Bairro, Cidade e Estado.
-- Relacionamentos: Many To One com Empresas.
+### 5. CRUD de empresas
 
-Auth
-- Validar todas as rotas dos controllers com JWT;
-- Ao usuário logar, o token deve ser retornado para ser guardado para as próximas requests no front-end.
+O módulo `companies` (empresas) possui 5 métodos que desempenham as funcionalidades de um CRUD: criação, leitura (listagem e busca por ID), atualização e remoção.
+Os métodos foram implementados de forma simples, similar ao que existe na documentação do NestJS (e TypeORM).
 
-## Readme do Repositório
+### 6. Autorização
 
-- Deve conter o título do projeto
-- Uma descrição sobre o projeto em frase
-- Deve conter uma lista com linguagem, framework e/ou tecnologias usadas
-- Como instalar e usar o projeto (instruções)
-- Não esqueça o [.gitignore](https://www.toptal.com/developers/gitignore)
-- Se está usando github pessoal, referencie que é um challenge by coodesh:  
+Para realizar a autorização dos endpoints (verificar se o usuário logado - autenticado - possui permissão para realizar a ação), foi utilizado o conceito de Guards do NestJS. Com isso, evitamos a duplicação de código e abstraímos uma funcionalidade comum (verificação de permissão) para uma outra classe.
 
->  This is a challenge by [Coodesh](https://coodesh.com/)
+#### 6.1. CompanyAccessGuard
 
-## Finalização e Instruções para a Apresentação
+Esse guard acessa o parâmetro de rota companyId e verifica se o usuário logado (informado no JWT) é o proprietário daquela empresa.
+Caso o id informado no companyId não exista no banco, o endpoint é permitido para que o service retorne um 404 (NotFoundException), ao invés de um 401 (UnauthorizedException)
 
-Avisar sobre a finalização e enviar para correção.
+### 7. CRUD de locais
 
-1. Confira se você respondeu o Scorecard da Vaga que chegou no seu email;
-2. Confira se você respondeu o Mapeamento Comportamental que chegou no seu email;
-3. Acesse: [https://coodesh.com/challenges/review](https://coodesh.com/challenges/review);
-4. Adicione o repositório com a sua solução;
-5. Grave um vídeo, utilizando o botão na tela de solicitar revisão da Coodesh, com no máximo 5 minutos, com a apresentação do seu projeto. Foque em pontos obrigatórios e diferenciais quando for apresentar.
-6. Adicione o link da apresentação do seu projeto no README.md.
-7. Verifique se o Readme está bom e faça o commit final em seu repositório;
-8. Confira a vaga desejada;
-9. Envie e aguarde as instruções para seguir no processo. Sucesso e boa sorte. =)
-
-## Suporte
-
-Use a [nossa comunidade](https://discord.gg/rdXbEvjsWu) para tirar dúvidas sobre o processo ou envie uma mensagem diretamente a um especialista no chat da plataforma. 
+O CRUD de locais possui uma única diferença do CRUD de empresas: o caminho.
+Ele foi definido na rota `/companies/{companyId}/places` pois, dessa forma, o companyId pode ser utilizado para autorização com o mesmo guard do CRUD de empresas (CompanyAccessGuard).
+Isso é possível pois os locais possuem relacionamento ManyToOne com as empresas. Portanto, o usuário possui acesso aos locais de uma empresa que seja sua.
+O guard valida se o companyId na rota é pertencente ao usuário logado, e o service retorna apenas locais relacionados ao companyId informado.
 
 
+> This is a challenge by [Coodesh](https://coodesh.com/)
