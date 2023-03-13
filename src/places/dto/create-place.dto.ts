@@ -1,5 +1,5 @@
 import { IsString } from "class-validator";
-import { IsCep } from "src/validators/IsCEP.decorator";
+import { IsCep } from "src/validators/IsCep.decorator";
 
 export class CreatePlaceDto {
   @IsString()
