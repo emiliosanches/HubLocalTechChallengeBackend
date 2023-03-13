@@ -26,7 +26,7 @@ export class PlacesService {
 
   async findAll(companyId: number, page = 1, perPage = 10) {
     const [data, total] = await this.placesRepository.findAndCount({
-      select: ['id', 'name'],
+      select: ['id', 'name', 'companyId'],
       take: perPage,
       skip: perPage * (page - 1),
       where: {
