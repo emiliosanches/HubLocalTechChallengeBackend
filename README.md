@@ -2,6 +2,9 @@
 
 Esse repositório contem o backend de um teste técnico para a vaga de FullStack Javascript Developer na HubLocal. Trata-se de um CRUD de duas entidades (empresas e locais) relacionadas, desenvolvido em NestJS, com autenticação (login e cadastro).
 
+## Acessar aplicação hospedada
+A aplicação está hospedada no Railway e pode ser acessada no link: [https://hublocaltechchallengebackend-production.up.railway.app/](https://hublocaltechchallengebackend-production.up.railway.app/)
+
 ## Tecnologias utilizadas
 
 - NestJS
