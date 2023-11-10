@@ -1,4 +1,4 @@
-import { User as AppUser } from 'src/users/entities/user.entity';
+import { User as AppUser } from 'src/users/domain/user.entity';
 
 declare global {
   namespace Express {

@@ -1,7 +1,15 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import {
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  Inject,
+} from '@nestjs/common';
 import { Request } from 'express';
-import { Company } from 'src/companies/entities/company.entity';
+import { Company } from 'src/companies/domain/company.entity';
+import {
+  COMPANY_REPOSITORY,
+  CompanyRepository,
+} from 'src/companies/use-cases/ports/company-repository';
 import { Repository } from 'typeorm';
 
 /**
@@ -10,8 +18,8 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class CompanyAccessGuard implements CanActivate {
   constructor(
-    @InjectRepository(Company)
-    private readonly companiesRepository: Repository<Company>,
+    @Inject(COMPANY_REPOSITORY)
+    private readonly companiesRepository: CompanyRepository,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -25,11 +33,9 @@ export class CompanyAccessGuard implements CanActivate {
         `User id or company id is not defined. Is the endpoint "${request.method} ${request.path}" protected by JwtAuthGuard and has a path parameter named "companyId"?`,
       );
 
-    const company = await this.companiesRepository.findOne({
-      where: {
-        id: Number(companyId) || -1,
-      },
-    });
+    const company = await this.companiesRepository.findById(
+      Number(companyId) || -1,
+    );
 
     // allow executing if company doesn't exist, then the service should return 404
     return !company || userId === company.userId;
